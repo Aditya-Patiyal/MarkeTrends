@@ -30,8 +30,7 @@ from extract_skills import (  # noqa: E402
 from generate_data import LOCATION_COORDS  # noqa: E402
 
 st.set_page_config(
-    page_title="Job Market & Skills Trends",
-    page_icon="📈",
+    page_title="MarkeTrends",
     layout="wide",
 )
 
@@ -139,11 +138,47 @@ st.sidebar.caption(
 # Main content
 # ---------------------------------------------------------------------------
 
-st.title("📈 Job Market & Skills Trend Analysis")
+# --- Hero -------------------------------------------------------------------
+st.title("MarkeTrends")
+st.markdown("#### Job Market & Skills Trend Analysis")
 st.caption(
-    "Explore which skills are trending across roles and time, based on a "
-    "synthetic dataset of job postings."
+    "Explore which skills are trending across roles, locations, and time, "
+    "based on a synthetic dataset of job postings."
 )
+
+# --- What MarkeTrends offers -------------------------------------------------
+st.subheader("What MarkeTrends Offers")
+offer_col1, offer_col2 = st.columns(2)
+with offer_col1:
+    st.markdown(
+        "- **Top skills overview** — see the most in-demand skills across all postings\n"
+        "- **Demand over time** — track how interest in a specific skill has moved month by month\n"
+        "- **Role comparison** — compare which skills matter most for each role category\n"
+    )
+with offer_col2:
+    st.markdown(
+        "- **Salary insights** — median salary by role and by skill\n"
+        "- **Skill relationships** — which skills tend to be requested together\n"
+        "- **Emerging skills** — which skills are growing or declining fastest\n"
+    )
+
+with st.expander("How to Use"):
+    st.markdown(
+        "1. **Set your filters** in the sidebar — role category, location, and posted-date "
+        "range. Every chart and table below updates to match your selection.\n"
+        "2. **Move between tabs** to explore a different angle of the data: Overview, "
+        "Salary Insights, Skill Relationships, Emerging Skills, Locations, and Raw Data.\n"
+        "3. **Interact with individual charts** — pick a skill from the dropdown on the "
+        "Overview tab to see its monthly trend, or adjust the sliders on the Skill "
+        "Relationships and Emerging Skills tabs to change how many skills or which time "
+        "window is compared.\n"
+        "4. **Check the sidebar summary** at any time for a quick read on how many postings "
+        "are in view, the date range covered, and the single most in-demand skill.\n"
+        "5. **Export your results** from the Raw Data tab using the download button to take "
+        "the filtered postings offline."
+    )
+
+st.divider()
 
 if postings_filtered.empty:
     st.warning("No data matches the selected filters. Try widening your selection.")
