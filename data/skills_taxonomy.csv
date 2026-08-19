@@ -1,0 +1,43 @@
+skill,category,aliases
+Python,Programming Language,python
+R,Programming Language,"r programming|r language"
+SQL,Programming Language,sql
+Java,Programming Language,java
+Scala,Programming Language,scala
+JavaScript,Programming Language,javascript|js
+C++,Programming Language,c\+\+
+Excel,BI & Visualization,excel|ms excel|microsoft excel
+Power BI,BI & Visualization,power bi|powerbi
+Tableau,BI & Visualization,tableau
+Looker,BI & Visualization,looker
+AWS,Cloud,aws|amazon web services
+Azure,Cloud,azure|microsoft azure
+GCP,Cloud,gcp|google cloud platform|google cloud
+Snowflake,Cloud & Data Warehousing,snowflake
+Redshift,Cloud & Data Warehousing,redshift|amazon redshift
+BigQuery,Cloud & Data Warehousing,bigquery|big query
+Spark,Big Data,spark|apache spark|pyspark
+Hadoop,Big Data,hadoop
+Kafka,Big Data,kafka|apache kafka
+Airflow,Data Engineering,airflow|apache airflow
+dbt,Data Engineering,dbt
+Docker,DevOps,docker
+Kubernetes,DevOps,kubernetes|k8s
+Git,DevOps,git|github|gitlab
+Machine Learning,Machine Learning & AI,machine learning|ml models|ml pipelines
+Deep Learning,Machine Learning & AI,deep learning
+TensorFlow,Machine Learning & AI,tensorflow
+PyTorch,Machine Learning & AI,pytorch
+Scikit-learn,Machine Learning & AI,scikit-learn|sklearn|scikit learn
+NLP,Machine Learning & AI,nlp|natural language processing
+Computer Vision,Machine Learning & AI,computer vision|opencv
+Statistics,Analytics,statistics|statistical analysis|statistical modeling
+A/B Testing,Analytics,a/b testing|ab testing|experimentation
+ETL,Data Engineering,etl|extract transform load|etl pipelines
+Data Warehousing,Data Engineering,data warehousing|data warehouse
+NoSQL,Databases,nosql
+MongoDB,Databases,mongodb|mongo db
+PostgreSQL,Databases,postgresql|postgres
+Linux,DevOps,linux|unix
+REST API,Software Engineering,rest api|restful api|rest apis
+Agile,Soft Skills & Methodology,agile|scrum
