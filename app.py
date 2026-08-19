@@ -148,34 +148,136 @@ st.caption(
 
 # --- What MarkeTrends offers -------------------------------------------------
 st.subheader("What MarkeTrends Offers")
-offer_col1, offer_col2 = st.columns(2)
-with offer_col1:
+st.markdown(
+    "MarkeTrends runs a small data pipeline over a set of job postings: it "
+    "reads each posting's description, scans it against a taxonomy of about "
+    "40 tech and data skills using case-insensitive keyword/regex matching "
+    "(no heavy NLP model — every match is a literal skill name or a known "
+    "alias, so results stay fully explainable), and turns that into a "
+    "long-format table of one row per `(posting, skill)` match. Every tab "
+    "below is a different way of slicing that table. The dataset itself is "
+    "synthetic (2,000 generated postings with a fixed random seed), built to "
+    "mirror the shape of a real job-postings dataset, so the same pipeline "
+    "and charts work unchanged if you swap in real data with the same "
+    "columns."
+)
+
+with st.expander("Overview — which skills are in demand, and when"):
     st.markdown(
-        "- **Top skills overview** — see the most in-demand skills across all postings\n"
-        "- **Demand over time** — track how interest in a specific skill has moved month by month\n"
-        "- **Role comparison** — compare which skills matter most for each role category\n"
+        "- **Top skills bar chart**: counts, within your current filters, how many "
+        "postings mention each skill at least once, then ranks the top 15. A skill "
+        "at the top of this list is asked for broadly, across many postings — not "
+        "necessarily tied to one role or company.\n"
+        "- **Skill demand over time (line chart)**: pick any skill from the dropdown "
+        "and see how many postings mentioned it in each calendar month, based on "
+        "`posted_date`. Use this to spot whether a skill's demand is flat, rising, "
+        "seasonal, or fading — the same underlying logic as the Emerging Skills tab, "
+        "but for one skill you choose, viewed as a full time series instead of a "
+        "single percentage.\n"
+        "- **Role x skill heatmap**: takes the same top-15 skills and cross-tabulates "
+        "them against role category, so you can see at a glance that, for example, "
+        "SQL is heavily requested across every role while TensorFlow clusters almost "
+        "entirely inside ML Engineer and Data Scientist postings."
     )
-with offer_col2:
+
+with st.expander("Salary Insights — how pay lines up with roles and skills"):
     st.markdown(
-        "- **Salary insights** — median salary by role and by skill\n"
-        "- **Skill relationships** — which skills tend to be requested together\n"
-        "- **Emerging skills** — which skills are growing or declining fastest\n"
+        "Every posting carries a synthetic `salary_usd` estimate: a role-specific "
+        "base salary (e.g. ML Engineer pays more on average than Data Analyst) "
+        "multiplied by a location cost-of-living factor (a San Francisco posting is "
+        "scaled up, a Pune posting is scaled down), plus random noise. This is an "
+        "illustrative estimate for demo purposes, not a real market survey, so treat "
+        "absolute numbers as directional rather than authoritative.\n\n"
+        "- **Median salary by role category**: the middle salary value for each role, "
+        "which is more robust to outliers than a mean.\n"
+        "- **Median salary by top skill**: for each of the top 15 skills, the median "
+        "salary across every posting that mentions it — this is *not* saying the "
+        "skill causes the pay level, just that postings mentioning it tend to cluster "
+        "around that figure (a skill common in senior ML roles will show a higher "
+        "number than one common in entry-level analyst roles, for instance).\n"
+        "- **Salary distribution box plot**: shows the full spread (quartiles and "
+        "outliers) per role category, not just the median, so you can see how wide "
+        "or narrow the pay range is within a role."
+    )
+
+with st.expander("Skill Relationships — which skills are asked for together"):
+    st.markdown(
+        "For every posting, MarkeTrends looks at the *set* of skills it mentions and "
+        "counts every pair that co-occurs (e.g. a posting mentioning Python, SQL, and "
+        "AWS contributes one count each to the Python-SQL, Python-AWS, and SQL-AWS "
+        "pairs). Do this across all postings and you get a picture of which skills "
+        "travel together in real requirements — useful for spotting a natural skill "
+        "bundle to learn as a set (like Docker + Kubernetes + AWS) rather than in "
+        "isolation.\n\n"
+        "The **'Number of top skills to compare' slider** controls how many of the "
+        "most in-demand skills (by count, within your filters) are included in the "
+        "comparison — a smaller number keeps the heatmap focused on the biggest "
+        "skills, a larger number surfaces more, rarer combinations. The heatmap is "
+        "symmetric (skill A x skill B is the same as skill B x skill A); the table "
+        "below it lists the single strongest pairs by raw co-occurrence count."
+    )
+
+with st.expander("Emerging Skills — what's trending up or down right now"):
+    st.markdown(
+        "This tab splits your filtered date range into two equal, adjacent windows — "
+        "a **recent** window and the **prior** window immediately before it — and "
+        "compares how many postings mentioned each skill in each window. The percent "
+        "change is `(recent - prior) / prior x 100`, so a skill that went from 10 "
+        "mentions to 15 shows +50%.\n\n"
+        "The **'Comparison window (months)' slider** sets how many months make up "
+        "each of the two windows (e.g. a window of 3 compares the last 3 months "
+        "against the 3 months before that). To avoid noisy, meaningless swings from "
+        "skills with only a handful of mentions, any skill with fewer than 5 "
+        "mentions in the prior window is excluded from the leaderboard entirely. "
+        "Growing skills are shown in green, declining skills in red — both ranked by "
+        "the size of the swing, not the absolute mention count."
+    )
+
+with st.expander("Locations — where the postings are"):
+    st.markdown(
+        "A bubble map of postings by city, using fixed latitude/longitude "
+        "coordinates for each location in the dataset. Bubble size and color both "
+        "scale with the number of postings at that location within your current "
+        "filters, so it doubles as both a geographic and a magnitude view. `Remote` "
+        "postings have no physical coordinates and are therefore left off the map "
+        "entirely — they're still counted in every other tab, filter, and the "
+        "sidebar summary, just not plotted here."
+    )
+
+with st.expander("Raw Data — the underlying postings, and exporting them"):
+    st.markdown(
+        "A row-level table of every posting that currently matches your filters "
+        "(job title, company, location, role category, posted date, and salary), "
+        "sorted most-recent first. Use the **download button** below the table to "
+        "export exactly what you're looking at — the filtered subset, not the full "
+        "dataset — as a CSV file."
     )
 
 with st.expander("How to Use"):
     st.markdown(
-        "1. **Set your filters** in the sidebar — role category, location, and posted-date "
-        "range. Every chart and table below updates to match your selection.\n"
-        "2. **Move between tabs** to explore a different angle of the data: Overview, "
-        "Salary Insights, Skill Relationships, Emerging Skills, Locations, and Raw Data.\n"
-        "3. **Interact with individual charts** — pick a skill from the dropdown on the "
-        "Overview tab to see its monthly trend, or adjust the sliders on the Skill "
-        "Relationships and Emerging Skills tabs to change how many skills or which time "
-        "window is compared.\n"
-        "4. **Check the sidebar summary** at any time for a quick read on how many postings "
-        "are in view, the date range covered, and the single most in-demand skill.\n"
-        "5. **Export your results** from the Raw Data tab using the download button to take "
-        "the filtered postings offline."
+        "**1. Start with the sidebar filters.** Role category, location, and posted-"
+        "date range all apply globally — every chart, table, and the sidebar summary "
+        "stats recompute against whatever subset you've selected. There's no need to "
+        "re-apply filters per tab; set them once on the left and switch tabs freely.\n\n"
+        "**2. Pick a starting tab based on the question you have.** "
+        "*'What's hot right now?'* → Overview's top-skills bar chart. "
+        "*'Is X trending up or down?'* → either the Overview trend line for skill X "
+        "specifically, or the Emerging Skills leaderboard for a ranked view across "
+        "many skills at once. *'What does role Y pay, and what does it need?'* → "
+        "Salary Insights plus the Overview heatmap. *'What should I learn alongside "
+        "skill X?'* → Skill Relationships. *'Where are these jobs?'* → Locations.\n\n"
+        "**3. Use each tab's own controls to go deeper.** The Overview tab's skill "
+        "dropdown, the Skill Relationships slider, and the Emerging Skills window "
+        "slider all reshape their chart in place without touching your sidebar "
+        "filters — they're a second, finer layer of control local to that tab.\n\n"
+        "**4. Watch the sidebar summary as a sanity check.** If a chart looks sparse "
+        "or empty, check 'Postings analyzed' in the sidebar first — an overly narrow "
+        "filter combination (e.g. one role, one city, one month) can leave too few "
+        "postings for a meaningful chart, and some views (like Emerging Skills) "
+        "intentionally suppress low-volume, noisy results.\n\n"
+        "**5. Export when you're done exploring.** The Raw Data tab's download "
+        "button always reflects your current filters, so you can take the exact "
+        "slice you were just looking at and continue the analysis elsewhere."
     )
 
 st.divider()
